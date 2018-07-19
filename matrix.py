@@ -1,30 +1,116 @@
 import random
 
-from copy import deepcopy
-
-
-class Matrix:
-
+class Matrix: 
     def __init__(self, nrows, ncols):
-        """Construct a (nrows X ncols) matrix"""
-        pass
+        self.matrix=[[random.randint(0,9) for i in range(ncols)] for j in range(nrows)]
+        for i in range(nrows):
+            for j in range(ncols):               
+                print(self.matrix[i][j],end=' ')
+            print("")
+        print("")
 
-    def add(self, m):
-        """return a new Matrix object after summation"""
-        pass
+    def add(self,m):
+        if len(self.matrix)==len(m.matrix) and len(self.matrix[0])==len(m.matrix[0]):
+            self.l=[[0 for i in range(ncols)] for j in range(nrows)]
+            for i in range(nrows):
+                for j in range(ncols):
+                    self.l[i][j]=self.matrix[i][j]+m.matrix[i][j]
+            return self.l   
+        try:
+            for i in range(nrows):
+                for j in range(ncols):
+                    self.l[i][j]=self.matrix[i][j]+m.matrix[i][j]
+        except AttributeError:
+            pass
+    def sub(self,m):
+        if len(self.matrix)==len(m.matrix) and len(self.matrix[0])==len(m.matrix[0]):
+            self.c=[[0 for i in range(ncols)] for j in range(nrows)]
+            for i in range(nrows):
+                for j in range(ncols):
+                    self.c[i][j]=self.matrix[i][j]-m.matrix[i][j]
+            return self.c 
 
-    def sub(self, m):
-        """return a new Matrix object after substraction"""
-        pass
-
-    def mul(self, m):
-        """return a new Matrix object after multiplication"""
-        pass
-
+    def mul(self,m):
+        if len(self.matrix[0])==len(m.matrix):
+            try:    
+                self.d=[[0 for i in range(len(m.matrix[0]))] for j in range(len(self.matrix))]
+                for i in range(len(self.matrix)):
+                    for j in range(len(m.matrix[0])):
+                        for k in range(len(m.matrix)):
+                            self.d[i][j]= self.d[i][j] +self.matrix[i][k] * m.matrix[k][j]
+            except AttributeError:
+                pass
+            else:
+                return self.d 
     def transpose(self):
-        """return a new Matrix object after transpose"""
-        pass
-    
+        try:
+            self.e=[list(i) for i in zip(*self.d)]
+        except AttributeError:
+            pass
+        else:
+            return self.e
     def display(self):
-        """Display the content in the matrix"""
-        pass
+        print('========== A + B ==========')
+        try:
+            for i in range(nrows):
+                for j in range(ncols):
+                    print(self.l[i][j],end=" ")
+                print("")
+        except AttributeError:
+            print("Matrixs\' size should be in the same size")                
+        print("")
+        print('========== A - B ==========')
+        try:
+            for i in range(nrows):
+                for j in range(ncols):
+                    print(self.c[i][j],end=" ")
+                print("")
+        except AttributeError:     
+            print("Matrixs\' size should be in the same size")               
+        print("")
+        print('========== A * B ==========')  
+        try:
+            for i in range(len(self.d)):
+                for j in range(len(self.d[0])):
+                    print(self.d[i][j],end=" ")
+                print("")
+        except IndexError:
+            pass
+        except AttributeError:
+            print("Matrix A\'cols must equal Matrix B\'rows")
+        print("")
+        print('========== the transpose of A * B ==========')
+        try:
+            for i in range(len(self.e)):
+                for j in range(len(self.e[0])):
+                    print(self.e[i][j],end=" ")
+                print("")
+        except IndexError:
+            pass
+        except AttributeError:
+            print("There is nothing to transpose")
+# ----------------------------------------- #
+nrows=int(input("Enter A matrix's rows:"))
+ncols=int(input("Enter A matrix's cols:"))
+print('Matrix A',(nrows,ncols),':') 
+A=Matrix(nrows,ncols)
+nrows=int(input("Enter B matrix's rows:"))
+ncols=int(input("Enter B matrix's cols:"))
+print('Matrix B',(nrows,ncols),':') 
+B=Matrix(nrows,ncols)
+A.add(B)
+A.sub(B)
+A.mul(B)
+A.transpose()
+A.display()
+
+
+
+
+
+
+
+
+
+
+
